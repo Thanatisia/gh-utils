@@ -56,3 +56,9 @@
     - Updated document 'USAGE.md'
         + Removed 'python' from gh-clone usage after pip installation
 
+#### 1842H
+- Updates
+    - Updated source file 'ghclone.py' in 'src/gh-utils'
+        + Created function 'error_env_not_set()' to display a custom error message and exit if an environment variable is not set
+        + Performed some refactoring
+

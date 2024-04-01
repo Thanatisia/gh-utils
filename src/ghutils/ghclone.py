@@ -5,8 +5,23 @@ import os
 import sys
 from subprocess import PIPE, Popen
 
+def error_env_not_set(error_topic, env_var_str):
+    """
+    Error message: Environment Variable not set
+    """
+    err_msg = "{} is not set in the Environment Variable '{}', please set before proceeeding.".format(error_topic, env_var_str)
+    print(err_msg)
+    exit(1)
+
 def main():
     # Initialize Variables
+
+    ## Get Environment Variables
+    if os.getenv("REPO_AUTHOR") != None:
+        REPO_AUTHOR = os.getenv("REPO_AUTHOR")
+    else:
+        error_env_not_set("Main repository author", "REPO_AUTHOR")
+
     ## Security
     GITHUB_API_TOKEN = os.getenv("GITHUB_API_TOKEN")
 
@@ -14,8 +29,6 @@ def main():
     GIT_REMOTE_REPO_SERVER_PROTOCOL="https"
     GIT_REMOTE_REPO_SERVER_DOMAIN="github.com"
     GIT_REMOTE_REPO_SERVER_URL="{}://{}".format(GIT_REMOTE_REPO_SERVER_PROTOCOL, GIT_REMOTE_REPO_SERVER_DOMAIN)
-    REPO_AUTHOR="Thanatisia"
-    GIT_REMOTE_REPO_URL="{}/{}".format(GIT_REMOTE_REPO_SERVER_URL, REPO_AUTHOR)
 
     ## Repository records
     REPO_NAMES_DB_FILE_PATH="docs/records"
@@ -106,8 +119,7 @@ def main():
                             # Check if API Token is set
                             if GITHUB_API_TOKEN == None:
                                 # Not set
-                                print("GitHub API Token/Key is not set in the Environment Variable 'GITHUB_API_TOKEN', please set before proceeeding.")
-                                exit(1)
+                                error_env_not_set("GitHub API Token/Key", "GITHUB_API_TOKEN")
                             curr_repo_url="{}://{}@{}/{}".format(GIT_REMOTE_REPO_SERVER_PROTOCOL, GITHUB_API_TOKEN, GIT_REMOTE_REPO_SERVER_DOMAIN, curr_repo_name)
                         case "Fork":
                             REPO_DIR += "/Forks"
