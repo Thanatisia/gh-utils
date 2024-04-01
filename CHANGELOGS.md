@@ -79,3 +79,47 @@
     - Updated source file 'ghclone.py' in 'src/gh-utils'
         + Added directory and file checking
 
+#### 2200H
++ Version: 0.2.0
+
+- Version Changes
+    - gh-clone
+        - Added python packaging for easy installation and debugging
+            + Installable as a standalone executable/binary via pip install
+        - Added environment variables for working customization
+            + TODO: Implement CLI argument parsing to simplify setting of parameters
+            + Place gh-clone's logic into a class for GitHub-related usage as a library/module
+            + Verification and validation of data
+
+- New
+    + Added new python packaging script 'setup.py' for setuptools
+    + Added '.gitignore'
+    + Added python package dependencies file 'requirements.txt'
+
+- Updates
+    - Updated document 'USAGE.md'
+        + Cleaned up and changed some usage documentations
+        + Fixed formatting
+        + Added more context to setup
+        + Added installation steps
+        + Removed 'python' from gh-clone usage after pip installation
+        + Added Environment Variables for 'gh-clone'
+    - Updated python packaging script 'setup.py'
+        + Renamed package
+        + Fixed entry point for console scripts
+    - Updated source file 'gh-clone.py' in 'src/gh-utils'
+        + Added directories creation if does not exist
+        + Updated variables default values
+    - Migrated package 'src/gh-utils' to 'src/ghutils'
+        + Renamed 'gh-clone.py' to 'ghclone.py'
+    - Updated source file 'ghclone.py' in 'src/gh-utils'
+        + Moved current body of code into 'main()' function for entry point
+        + Created function 'error_env_not_set()' to display a custom error message and exit if an environment variable is not set
+        + Performed some refactoring
+        + Added function 'get_env_var()' as an implementation test for getting environment variables
+        + Added documentations to 'error_env_not_set()'
+        + Refactored variable initialization to object as an environment variable for some customization (for the time being) with the original default values set
+        + Added a 'cloned' dictionary to store all results for future use
+        + Split the current repository in the repository iteration by the '/' delimiter to obtain the project author and project name
+        + Removed necessity on 'REPO_AUTHOR' and making use of the repository list's author, allowing for dynamic author detection
+
