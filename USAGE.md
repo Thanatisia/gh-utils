@@ -65,25 +65,28 @@ USAGE
 - Prepare your GitHub repositories list in the following format
     - Notes
         + Please comment out all repositories you do not wish to clone by prepending the repository URL with the '#' delimiter
-        + Please note that for the repositories under the 'Forks' header, please prepend your GitHub API Token the same way as you would when cloning a Private Repository (i.e. https://[GITHUB_API_TOKEN]@github.com/author-name/repo-name)
+        - Please note that for the repositories under the 'Forks' header, 
+            - Assuming your repository is a private repository, please follow the same rules when cloning a Private Repository
+                - i.e.
+                    + Ensure that the Environment Variable 'GITHUB_API_TOKEN' is set
     ```
     # Public
-    https://github.com/author/repo-name-1
-    https://github.com/author/repo-name-2
-    https://github.com/author/repo-name-3
-    https://github.com/author/repo-name-4
+    author/repo-name-1
+    author/repo-name-2
+    author/repo-name-3
+    author/repo-name-4
     ...
-    https://github.com/author/repo-name-N
+    author/repo-name-N
 
     # Private
-    https://github.com/author/repo-name-1
-    https://github.com/author/repo-name-2
-    https://github.com/author/repo-name-3
-    https://github.com/author/repo-name-4
-    https://github.com/author/repo-name-N
+    author/repo-name-1
+    author/repo-name-2
+    author/repo-name-3
+    author/repo-name-4
+    author/repo-name-N
 
     # Forks
-    https://github.com/author/repo-name-N
+    author/repo-name-N
     ```
 
 - (Optional) If you are cloning private repositories

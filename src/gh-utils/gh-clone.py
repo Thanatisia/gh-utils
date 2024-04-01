@@ -17,16 +17,16 @@ REPO_AUTHOR="Thanatisia"
 GIT_REMOTE_REPO_URL="{}/{}".format(GIT_REMOTE_REPO_SERVER_URL, REPO_AUTHOR)
 
 ## Repository records
-REPO_NAMES_DB_FILE_PATH="docs/records/20240331-1448H"
+REPO_NAMES_DB_FILE_PATH="docs/records"
 REPO_NAMES_DB_FILE_NAME="all-repos.txt"
 REPO_NAMES_DB_FILE="{}/{}".format(REPO_NAMES_DB_FILE_PATH, REPO_NAMES_DB_FILE_NAME)
 
 ## Local Repository directory
-REPO_DIR="repos" # Repository storage directory
+REPO_DIR="repos/{}".format(REPO_AUTHOR) # Repository storage directory
 PUBLIC_REPO_DIR="{}/Public".format(REPO_DIR)
 PRIVATE_REPO_DIR="{}/Private".format(REPO_DIR)
 REPO_EXPORT_LOGS_FILE_PATH="docs/exports"
-REPO_EXPORT_LOGS_FILE_NAME="exports-20240331-1543H.log"
+REPO_EXPORT_LOGS_FILE_NAME="exports.log"
 REPO_EXPORT_LOGS_FILE="{}/{}".format(REPO_EXPORT_LOGS_FILE_PATH, REPO_EXPORT_LOGS_FILE_NAME)
 
 # Read the repository names file into an array
@@ -75,6 +75,7 @@ repositories = tmp_list
 with open(REPO_EXPORT_LOGS_FILE, "a+") as export_logs:
     # Initialize Variables
     curr_repo_type = "Public"
+
     # Iterate through repositories list
     for i in range(len(repositories)):
         # Get current repository
@@ -123,6 +124,12 @@ with open(REPO_EXPORT_LOGS_FILE, "a+") as export_logs:
                     case "Fork":
                         REPO_DIR += "/Forks"
 
+                # Check if current author folder exists
+                if not (os.path.isdir(REPO_DIR)):
+                    # Directory does not exist
+                    # Create directory for the current author
+                    os.makedirs(REPO_DIR)
+
                 # Clone the github repo
                 print("Cloning current repository: {}".format(curr_repo_url))
                 cmd_str = "git -C {} clone {}".format(REPO_DIR, curr_repo_url)
@@ -136,7 +143,7 @@ with open(REPO_EXPORT_LOGS_FILE, "a+") as export_logs:
                 export_logs.write("{} : {}".format(i, curr_repo_url))
 
         # Reset
-        REPO_DIR = "repos"
+        REPO_DIR = "repos/{}".format(REPO_AUTHOR)
 
         # Newline
         print("")
