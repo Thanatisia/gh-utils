@@ -5,42 +5,75 @@ import os
 import sys
 from subprocess import PIPE, Popen
 
-def error_env_not_set(error_topic, env_var_str):
+def error_env_not_set(error_topic, env_var_str, exit_flag=False):
     """
     Error message: Environment Variable not set
+
+    :: Params
+    - error_topic : The topic header and reason for error
+        + Type: String
+
+    - env_var_str : The target Environment Variable that was not set
+        + Type: String
+
+    - exit_flag: Flag to enable/disable automatic exit if function is called
+        + Type: Boolean
+        + Default: False
     """
-    err_msg = "{} is not set in the Environment Variable '{}', please set before proceeeding.".format(error_topic, env_var_str)
+    err_msg = "[-] {} is not set in the Environment Variable '{}', please set before proceeeding.".format(error_topic, env_var_str)
     print(err_msg)
-    exit(1)
+
+    if exit_flag:
+        exit(1)
+
+def get_env_var():
+    """
+    Get Environment Variables
+    """
+    env_var = {
+        # [Environment Variable] = { "description" : "summary", "value" : value }
+        "REPO_AUTHOR" : { "description" : "Main Repository Author", "value" : None },
+        "GIT_REMOTE_REPO_SERVER_PROTOCOL" : { "description" : "The Git Remote Repository Server domain protocol", "value" : None },
+    }
+    for env_var_name, env_var_mapping in env_var.items():
+        # Get value of environment variable
+        env_var_value = os.getenv(env_var_name)
+
+        # Get header description of environment variable
+        env_var_desc = env_var_mapping["description"]
+
+        # Check if environment variable is found
+        if env_var_value != None:
+            env_var[env_var_name]["value"] = env_var_value
+        else:
+            error_env_not_set(env_var_desc, env_var_name)
+    print("")
 
 def main():
     # Initialize Variables
 
-    ## Get Environment Variables
-    if os.getenv("REPO_AUTHOR") != None:
-        REPO_AUTHOR = os.getenv("REPO_AUTHOR")
-    else:
-        error_env_not_set("Main repository author", "REPO_AUTHOR")
-
+    # Get Environment Variables
     ## Security
     GITHUB_API_TOKEN = os.getenv("GITHUB_API_TOKEN")
 
     ## Remote Git Repository Server
-    GIT_REMOTE_REPO_SERVER_PROTOCOL="https"
-    GIT_REMOTE_REPO_SERVER_DOMAIN="github.com"
-    GIT_REMOTE_REPO_SERVER_URL="{}://{}".format(GIT_REMOTE_REPO_SERVER_PROTOCOL, GIT_REMOTE_REPO_SERVER_DOMAIN)
+    GIT_REMOTE_REPO_SERVER_PROTOCOL = os.getenv("GIT_REMOTE_REPO_SERVER_PROTOCOL", "https")
+    GIT_REMOTE_REPO_SERVER_DOMAIN = os.getenv("GIT_REMOTE_REPO_SERVER_DOMAIN", "github.com")
 
     ## Repository records
-    REPO_NAMES_DB_FILE_PATH="docs/records"
-    REPO_NAMES_DB_FILE_NAME="all-repos.txt"
-    REPO_NAMES_DB_FILE="{}/{}".format(REPO_NAMES_DB_FILE_PATH, REPO_NAMES_DB_FILE_NAME)
+    REPO_NAMES_DB_FILE_PATH = os.getenv("REPO_NAMES_DB_FILE_PATH", "docs/records")
+    REPO_NAMES_DB_FILE_NAME = os.getenv("REPO_NAMES_DB_FILE_NAME", "all-repos.txt")
 
     ## Local Repository directory
-    REPO_DIR="repos/{}".format(REPO_AUTHOR) # Repository storage directory
+    REPO_DIR = os.getenv("REPO_DIR", "repos") # Repository storage directory
+    REPO_EXPORT_LOGS_FILE_PATH = os.getenv("REPO_EXPORT_LOGS_FILE_PATH", "docs/exports") # Export logs filepath
+    REPO_EXPORT_LOGS_FILE_NAME = os.getenv("REPO_EXPORT_LOGS_FILE_NAME", "exports.log")  # Export logs filename
+
+    ## Format strings
+    GIT_REMOTE_REPO_SERVER_URL="{}://{}".format(GIT_REMOTE_REPO_SERVER_PROTOCOL, GIT_REMOTE_REPO_SERVER_DOMAIN)
+    REPO_NAMES_DB_FILE="{}/{}".format(REPO_NAMES_DB_FILE_PATH, REPO_NAMES_DB_FILE_NAME)
     PUBLIC_REPO_DIR="{}/Public".format(REPO_DIR)
     PRIVATE_REPO_DIR="{}/Private".format(REPO_DIR)
-    REPO_EXPORT_LOGS_FILE_PATH="docs/exports"
-    REPO_EXPORT_LOGS_FILE_NAME="exports.log"
     REPO_EXPORT_LOGS_FILE="{}/{}".format(REPO_EXPORT_LOGS_FILE_PATH, REPO_EXPORT_LOGS_FILE_NAME)
 
     # Read the repository names file into an array
@@ -49,6 +82,10 @@ def main():
         "public" : "",
         "private" : "",
         "forks" : ""
+    }
+    cloned = {
+        # List of repositories cloned
+        # [author-name] : [ repositories, ... ]
     }
     line = ""
     with open(REPO_NAMES_DB_FILE, "r+") as read_file:
@@ -106,6 +143,23 @@ def main():
                 if len(curr_repo_name) > 0:
                     # Repository found
 
+                    # Split current repository name into author and repository
+                    curr_repo = curr_repo_name.split("/")
+                    curr_repo_author = curr_repo[0]
+                    curr_repo_pkg = curr_repo[1]
+
+                    # Check if current author is in the dictionary
+                    if not (curr_repo_author in cloned):
+                        # Not in dictionary
+                        # Initialize entry in clone list
+                        cloned[curr_repo_author] = []
+
+                    # Append entry to author list
+                    cloned[curr_repo_author].append(curr_repo_pkg)
+
+                    # Append the current author to the root/base directory
+                    REPO_DIR += "/{}".format(curr_repo_author)
+
                     # Format repository URL
                     curr_repo_url="{}/{}".format(GIT_REMOTE_REPO_SERVER_URL, curr_repo_name)
 
@@ -142,8 +196,11 @@ def main():
                     # Write repository URL to logs
                     export_logs.write("{} : {}".format(i, curr_repo_url))
 
+                    # Write a newline
+                    export_logs.write("\n")
+
             # Reset
-            REPO_DIR = "repos/{}".format(REPO_AUTHOR)
+            REPO_DIR = "repos"
 
             # Newline
             print("")

@@ -112,6 +112,34 @@ USAGE
         export GITHUB_API_TOKEN=[GITHUB_API_TOKEN]
         ```
 
+*Environment Variables*
+-----------------------
+- Security
+    - GITHUB_API_TOKEN : Set your GitHub API Token (aka 'Secret Key') if you wish to clone Private Repositories
+        + Type: String
+
+- Remote Git Repository Server
+    - GIT_REMOTE_REPO_SERVER_PROTOCOL : Set the protocol (i.e. http|https) used by the target git remote repository server's domain (i.e. http|https://github.com)
+        + Type: String
+        + Default: https
+    - GIT_REMOTE_REPO_SERVER_DOMAIN : Set the Server IP/domain of your target git remote repository server
+        + Type: String
+        + Default: "github.com"
+
+- Repository lists
+    - REPO_NAMES_DB_FILE_PATH : Set the file path to the repository list
+        + Default: "docs/records"
+    - REPO_NAMES_DB_FILE_NAME : Set the file name of the repository list
+        + Default: "all-repos.txt"
+
+- Local Repository directory
+    - REPO_DIR : Set the git repository base/root directory
+        + Default: "repos"
+    - REPO_EXPORT_LOGS_FILE_PATH : Set the output filepath to the Export logs
+        + Default: "docs/exports"
+    - REPO_EXPORT_LOGS_FILE_NAME : Set the Export logs filename
+        + Default: "exports.log"
+
 *Usage*
 -------
 - Cloning Public Repositories

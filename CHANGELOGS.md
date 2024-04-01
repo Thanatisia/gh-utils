@@ -62,3 +62,15 @@
         + Created function 'error_env_not_set()' to display a custom error message and exit if an environment variable is not set
         + Performed some refactoring
 
+#### 2059H
+- Updates
+    - Updated document 'USAGE.md'
+        + Added Environment Variables for 'gh-clone'
+    - Updated source file 'ghclone.py' in 'src/gh-utils'
+        + Added function 'get_env_var()' as an implementation test for getting environment variables
+        + Added documentations to 'error_env_not_set()'
+        + Refactored variable initialization to object as an environment variable for some customization (for the time being) with the original default values set
+        + Added a 'cloned' dictionary to store all results for future use
+        + Split the current repository in the repository iteration by the '/' delimiter to obtain the project author and project name
+        + Removed necessity on 'REPO_AUTHOR' and making use of the repository list's author, allowing for dynamic author detection
+
