@@ -34,9 +34,23 @@ USAGE
             .\[virtual-environment-name]\Scripts\activate
             ```
 
-- Install package dependencies
+- Install locally
+    - Install package dependencies
+        ```bash
+        python -m pip install -Ur requirements.txt
+        ```
+    - (Optional) Uninstall current package
+        ```bash
+        pip uninstall ghutils
+        ```
+    - Install locally as development mode 
+        ```bash 
+        pip install .
+        ```
+
+- Install using pip
     ```bash
-    python -m pip install -Ur requirements.txt
+    pip install git+https://github.com/Thanatisia/gh-utils
     ```
 
 - Obtain your GitHub repositories as a JSON data serialization file using the GitHub API
@@ -64,26 +78,32 @@ USAGE
 
 - Prepare your GitHub repositories list in the following format
     - Notes
+        - Please place your repositories ('author/repo-name') under the appropriate headers
+            + Headers are identified by '# Public|Private|Forks'
+            + By default (Header is not specified): The cloned repositories are public
         + Please comment out all repositories you do not wish to clone by prepending the repository URL with the '#' delimiter
-        + Please note that for the repositories under the 'Forks' header, please prepend your GitHub API Token the same way as you would when cloning a Private Repository (i.e. https://[GITHUB_API_TOKEN]@github.com/author-name/repo-name)
+        - Please note that for the repositories under the 'Forks' header, 
+            - Assuming your repository is a private repository, please follow the same rules when cloning a Private Repository
+                - i.e.
+                    + Ensure that the Environment Variable 'GITHUB_API_TOKEN' is set
     ```
     # Public
-    https://github.com/author/repo-name-1
-    https://github.com/author/repo-name-2
-    https://github.com/author/repo-name-3
-    https://github.com/author/repo-name-4
+    author/repo-name-1
+    author/repo-name-2
+    author/repo-name-3
+    author/repo-name-4
     ...
-    https://github.com/author/repo-name-N
+    author/repo-name-N
 
     # Private
-    https://github.com/author/repo-name-1
-    https://github.com/author/repo-name-2
-    https://github.com/author/repo-name-3
-    https://github.com/author/repo-name-4
-    https://github.com/author/repo-name-N
+    author/repo-name-1
+    author/repo-name-2
+    author/repo-name-3
+    author/repo-name-4
+    author/repo-name-N
 
     # Forks
-    https://github.com/author/repo-name-N
+    author/repo-name-N
     ```
 
 - (Optional) If you are cloning private repositories
@@ -92,16 +112,44 @@ USAGE
         export GITHUB_API_TOKEN=[GITHUB_API_TOKEN]
         ```
 
+*Environment Variables*
+-----------------------
+- Security
+    - GITHUB_API_TOKEN : Set your GitHub API Token (aka 'Secret Key') if you wish to clone Private Repositories
+        + Type: String
+
+- Remote Git Repository Server
+    - GIT_REMOTE_REPO_SERVER_PROTOCOL : Set the protocol (i.e. http|https) used by the target git remote repository server's domain (i.e. http|https://github.com)
+        + Type: String
+        + Default: https
+    - GIT_REMOTE_REPO_SERVER_DOMAIN : Set the Server IP/domain of your target git remote repository server
+        + Type: String
+        + Default: "github.com"
+
+- Repository lists
+    - REPO_NAMES_DB_FILE_PATH : Set the file path to the repository list
+        + Default: "docs/records"
+    - REPO_NAMES_DB_FILE_NAME : Set the file name of the repository list
+        + Default: "all-repos.txt"
+
+- Local Repository directory
+    - REPO_DIR : Set the git repository base/root directory
+        + Default: "repos"
+    - REPO_EXPORT_LOGS_FILE_PATH : Set the output filepath to the Export logs
+        + Default: "docs/exports"
+    - REPO_EXPORT_LOGS_FILE_NAME : Set the Export logs filename
+        + Default: "exports.log"
+
 *Usage*
 -------
 - Cloning Public Repositories
     ```bash
-    python gh-clone.py
+    gh-clone
     ```
 
 - Cloning Private (and Public) Repositories
     ```bash
-    GITHUB_API_TOKEN=[GITHUB_API_TOKEN] python gh-clone.py
+    GITHUB_API_TOKEN=[GITHUB_API_TOKEN] gh-clone
     ```
 
 ## Wiki
