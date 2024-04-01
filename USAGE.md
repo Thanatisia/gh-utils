@@ -34,9 +34,23 @@ USAGE
             .\[virtual-environment-name]\Scripts\activate
             ```
 
-- Install package dependencies
+- Install locally
+    - Install package dependencies
+        ```bash
+        python -m pip install -Ur requirements.txt
+        ```
+    - (Optional) Uninstall current package
+        ```bash
+        pip uninstall ghutils
+        ```
+    - Install locally as development mode 
+        ```bash 
+        pip install .
+        ```
+
+- Install using pip
     ```bash
-    python -m pip install -Ur requirements.txt
+    pip install git+https://github.com/Thanatisia/gh-utils
     ```
 
 - Obtain your GitHub repositories as a JSON data serialization file using the GitHub API
@@ -64,6 +78,9 @@ USAGE
 
 - Prepare your GitHub repositories list in the following format
     - Notes
+        - Please place your repositories ('author/repo-name') under the appropriate headers
+            + Headers are identified by '# Public|Private|Forks'
+            + By default (Header is not specified): The cloned repositories are public
         + Please comment out all repositories you do not wish to clone by prepending the repository URL with the '#' delimiter
         - Please note that for the repositories under the 'Forks' header, 
             - Assuming your repository is a private repository, please follow the same rules when cloning a Private Repository

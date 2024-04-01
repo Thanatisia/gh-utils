@@ -1,12 +1,11 @@
 from setuptools import setup, find_packages
 
 setup(
-    name='gh-utils',
+    name='ghutils',
     version='0.1.0',
     description="Collection of various GitHub-related git remote repository server helper utilities",
     author='Thanatisia',
     author_email='55834101+Thanatisia@users.noreply.github.com',
-    # packages=["mkparse"] ,# Default: find_packages()
     packages=find_packages("src"),
     package_dir={"": "src"},
     install_requires=[
@@ -27,7 +26,7 @@ setup(
     entry_points = {
         # Program Entry Point(s) and scripts
         'console_scripts' : [
-            'gh-clone = gh-utils/gh-clone:main',
+            'gh-clone = ghutils.ghclone:main',
         ],
     },
 )

@@ -38,3 +38,16 @@
         + Added directories creation if does not exist
         + Updated variables default values
 
+#### 1821H
+- Updates
+    - Updated document 'USAGE.md'
+        + Added more context to setup
+        + Added installation steps
+    - Updated python packaging script 'setup.py'
+        + Renamed package
+        + Fixed entry point for console scripts
+    - Migrated package 'src/gh-utils' to 'src/ghutils'
+        + Renamed 'gh-clone.py' to 'ghclone.py'
+    - Updated source file 'ghclone.py' in 'src/gh-utils'
+        + Moved current body of code into 'main()' function for entry point
+
