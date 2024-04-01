@@ -74,3 +74,8 @@
         + Split the current repository in the repository iteration by the '/' delimiter to obtain the project author and project name
         + Removed necessity on 'REPO_AUTHOR' and making use of the repository list's author, allowing for dynamic author detection
 
+#### 2145H
+- Updates
+    - Updated source file 'ghclone.py' in 'src/gh-utils'
+        + Added directory and file checking
+

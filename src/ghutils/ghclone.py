@@ -87,125 +87,137 @@ def main():
         # List of repositories cloned
         # [author-name] : [ repositories, ... ]
     }
+
+    # Check if current project structure exists
+    project_structure = [ REPO_DIR, REPO_NAMES_DB_FILE_PATH, REPO_EXPORT_LOGS_FILE_PATH ]
+    # Create project structure
+    for curr_dir in project_structure:
+        if not (os.path.isdir(curr_dir)):
+            # Directory does not exist
+            os.makedirs(curr_dir)
+
+    # Check if repository list exists
     line = ""
-    with open(REPO_NAMES_DB_FILE, "r+") as read_file:
-        # Read content into list
-        repositories = read_file.readlines()
+    if os.path.isfile(REPO_NAMES_DB_FILE):
+        with open(REPO_NAMES_DB_FILE, "r+") as read_file:
+            # Read content into list
+            repositories = read_file.readlines()
 
-        # Close file after usage
-        read_file.close()
+            # Close file after usage
+            read_file.close()
 
-    # Cleanup and sanitize repositories list
-    tmp_list = []
-    for i in range(len(repositories)):
-        # Get current entry
-        curr_entry = repositories[i]
-
-        # Strip all special characters from the sides
-        sanitized_entry = curr_entry.strip()
-
-        # Check if is newline
-        if len(curr_entry) > 0:
-            tmp_list.append(sanitized_entry)
-    repositories = tmp_list
-
-    # Open export logs file to write to during the cloning process
-    with open(REPO_EXPORT_LOGS_FILE, "a+") as export_logs:
-        # Initialize Variables
-        curr_repo_type = "Public"
-
-        # Iterate through repositories list
+        # Cleanup and sanitize repositories list
+        tmp_list = []
         for i in range(len(repositories)):
-            # Get current repository
-            curr_repo_name = repositories[i]
+            # Get current entry
+            curr_entry = repositories[i]
 
-            # Check if is comment
-            if '#' in curr_repo_name:
-                # Is a comment
-                print("[{}] is a comment".format(curr_repo_name))
+            # Strip all special characters from the sides
+            sanitized_entry = curr_entry.strip()
 
-                header = curr_repo_name.split('#')[1].strip()
-                print("Header: {}".format(header))
+            # Check if is newline
+            if len(curr_entry) > 0:
+                tmp_list.append(sanitized_entry)
+        repositories = tmp_list
 
-                # Check if header contains 'Public', 'Private' or 'Fork'
-                if 'Public' in header:
-                    # Public Repositories
-                    curr_repo_type = "Public"
-                elif 'Private' in header:
-                    # Private Repositories
-                    curr_repo_type = "Private"
-                elif 'Fork' in header:
-                    # Forked Repositories
-                    curr_repo_type = "Fork"
-            else:
-                # Not a comment
-                # Check if there are any repositories
-                if len(curr_repo_name) > 0:
-                    # Repository found
+        # Open export logs file to write to during the cloning process
+        with open(REPO_EXPORT_LOGS_FILE, "a+") as export_logs:
+            # Initialize Variables
+            curr_repo_type = "Public"
 
-                    # Split current repository name into author and repository
-                    curr_repo = curr_repo_name.split("/")
-                    curr_repo_author = curr_repo[0]
-                    curr_repo_pkg = curr_repo[1]
+            # Iterate through repositories list
+            for i in range(len(repositories)):
+                # Get current repository
+                curr_repo_name = repositories[i]
 
-                    # Check if current author is in the dictionary
-                    if not (curr_repo_author in cloned):
-                        # Not in dictionary
-                        # Initialize entry in clone list
-                        cloned[curr_repo_author] = []
+                # Check if is comment
+                if '#' in curr_repo_name:
+                    # Is a comment
+                    print("[{}] is a comment".format(curr_repo_name))
 
-                    # Append entry to author list
-                    cloned[curr_repo_author].append(curr_repo_pkg)
+                    header = curr_repo_name.split('#')[1].strip()
+                    print("Header: {}".format(header))
 
-                    # Append the current author to the root/base directory
-                    REPO_DIR += "/{}".format(curr_repo_author)
+                    # Check if header contains 'Public', 'Private' or 'Fork'
+                    if 'Public' in header:
+                        # Public Repositories
+                        curr_repo_type = "Public"
+                    elif 'Private' in header:
+                        # Private Repositories
+                        curr_repo_type = "Private"
+                    elif 'Fork' in header:
+                        # Forked Repositories
+                        curr_repo_type = "Fork"
+                else:
+                    # Not a comment
+                    # Check if there are any repositories
+                    if len(curr_repo_name) > 0:
+                        # Repository found
 
-                    # Format repository URL
-                    curr_repo_url="{}/{}".format(GIT_REMOTE_REPO_SERVER_URL, curr_repo_name)
+                        # Split current repository name into author and repository
+                        curr_repo = curr_repo_name.split("/")
+                        curr_repo_author = curr_repo[0]
+                        curr_repo_pkg = curr_repo[1]
 
-                    # Check repository type
-                    match curr_repo_type:
-                        case "Public":
-                            REPO_DIR += "/Public"
-                        case "Private":
-                            REPO_DIR += "/Private"
-                            # Set API Token
-                            # Check if API Token is set
-                            if GITHUB_API_TOKEN == None:
-                                # Not set
-                                error_env_not_set("GitHub API Token/Key", "GITHUB_API_TOKEN")
-                            curr_repo_url="{}://{}@{}/{}".format(GIT_REMOTE_REPO_SERVER_PROTOCOL, GITHUB_API_TOKEN, GIT_REMOTE_REPO_SERVER_DOMAIN, curr_repo_name)
-                        case "Fork":
-                            REPO_DIR += "/Forks"
+                        # Check if current author is in the dictionary
+                        if not (curr_repo_author in cloned):
+                            # Not in dictionary
+                            # Initialize entry in clone list
+                            cloned[curr_repo_author] = []
 
-                    # Check if current author folder exists
-                    if not (os.path.isdir(REPO_DIR)):
-                        # Directory does not exist
-                        # Create directory for the current author
-                        os.makedirs(REPO_DIR)
+                        # Append entry to author list
+                        cloned[curr_repo_author].append(curr_repo_pkg)
 
-                    # Clone the github repo
-                    print("Cloning current repository: {}".format(curr_repo_url))
-                    cmd_str = "git -C {} clone {}".format(REPO_DIR, curr_repo_url)
-                    print("Command: {}".format(cmd_str.split()))
-                    proc = Popen(cmd_str.split(), stdout=PIPE)
-                    stdout = proc.communicate()[0].decode("utf-8")
-                    res_code = proc.stdout
-                    print("Standard Output: {}".format(stdout))
+                        # Append the current author to the root/base directory
+                        REPO_DIR += "/{}".format(curr_repo_author)
 
-                    # Write repository URL to logs
-                    export_logs.write("{} : {}".format(i, curr_repo_url))
+                        # Format repository URL
+                        curr_repo_url="{}/{}".format(GIT_REMOTE_REPO_SERVER_URL, curr_repo_name)
 
-                    # Write a newline
-                    export_logs.write("\n")
+                        # Check repository type
+                        match curr_repo_type:
+                            case "Public":
+                                REPO_DIR += "/Public"
+                            case "Private":
+                                REPO_DIR += "/Private"
+                                # Set API Token
+                                # Check if API Token is set
+                                if GITHUB_API_TOKEN == None:
+                                    # Not set
+                                    error_env_not_set("GitHub API Token/Key", "GITHUB_API_TOKEN")
+                                curr_repo_url="{}://{}@{}/{}".format(GIT_REMOTE_REPO_SERVER_PROTOCOL, GITHUB_API_TOKEN, GIT_REMOTE_REPO_SERVER_DOMAIN, curr_repo_name)
+                            case "Fork":
+                                REPO_DIR += "/Forks"
 
-            # Reset
-            REPO_DIR = "repos"
+                        # Check if current author folder exists
+                        if not (os.path.isdir(REPO_DIR)):
+                            # Directory does not exist
+                            # Create directory for the current author
+                            os.makedirs(REPO_DIR)
 
-            # Newline
-            print("")
+                        # Clone the github repo
+                        print("Cloning current repository: {}".format(curr_repo_url))
+                        cmd_str = "git -C {} clone {}".format(REPO_DIR, curr_repo_url)
+                        print("Command: {}".format(cmd_str.split()))
+                        proc = Popen(cmd_str.split(), stdout=PIPE)
+                        stdout = proc.communicate()[0].decode("utf-8")
+                        res_code = proc.stdout
+                        print("Standard Output: {}".format(stdout))
 
-        # Close file after usage
-        export_logs.close()
+                        # Write repository URL to logs
+                        export_logs.write("{} : {}".format(i+1, curr_repo_url))
 
+                        # Write a newline
+                        export_logs.write("\n")
+
+                # Reset
+                REPO_DIR = "repos"
+
+                # Newline
+                print("")
+
+            # Close file after usage
+            export_logs.close()
+    else:
+        print("Repository List {} does not exist, please create one before proceeding".format(REPO_NAMES_DB_FILE))
 
