@@ -3,7 +3,7 @@ Unit Test for gh-clone
 """
 import os
 import sys
-from ghutils.ghclone import GitHubClone
+from ghutils.core import GitHubClone
 
 def init():
     """
