@@ -135,3 +135,8 @@
     - Updated source file 'ghclone.py'
         + Added new class 'GitHubClone' as an attempt to start creating a library/framework of GitHub-related utilities
 
+#### 2258H
+- New
+    - Added new directory 'tests/' for all unit tests
+        + Added new unit test source file 'ghclone-unittest.py' for testing 'gh-clone'
+
