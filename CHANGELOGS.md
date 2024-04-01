@@ -123,3 +123,9 @@
         + Split the current repository in the repository iteration by the '/' delimiter to obtain the project author and project name
         + Removed necessity on 'REPO_AUTHOR' and making use of the repository list's author, allowing for dynamic author detection
 
+#### 2209H
+- Updates
+    - Updated document 'README.md'
+        + Updated version to v0.2.0
+    - Updated python packaging script 'setup.py'
+        + Updated version to v0.2.0

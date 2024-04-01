@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='ghutils',
-    version='0.1.0',
+    version='0.2.0',
     description="Collection of various GitHub-related git remote repository server helper utilities",
     author='Thanatisia',
     author_email='55834101+Thanatisia@users.noreply.github.com',
