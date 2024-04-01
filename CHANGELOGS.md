@@ -51,3 +51,8 @@
     - Updated source file 'ghclone.py' in 'src/gh-utils'
         + Moved current body of code into 'main()' function for entry point
 
+#### 1831H
+- Updates
+    - Updated document 'USAGE.md'
+        + Removed 'python' from gh-clone usage after pip installation
+

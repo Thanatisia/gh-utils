@@ -116,12 +116,12 @@ USAGE
 -------
 - Cloning Public Repositories
     ```bash
-    python gh-clone.py
+    gh-clone
     ```
 
 - Cloning Private (and Public) Repositories
     ```bash
-    GITHUB_API_TOKEN=[GITHUB_API_TOKEN] python gh-clone.py
+    GITHUB_API_TOKEN=[GITHUB_API_TOKEN] gh-clone
     ```
 
 ## Wiki
