@@ -129,3 +129,9 @@
         + Updated version to v0.2.0
     - Updated python packaging script 'setup.py'
         + Updated version to v0.2.0
+
+#### 2247H
+- Updates
+    - Updated source file 'ghclone.py'
+        + Added new class 'GitHubClone' as an attempt to start creating a library/framework of GitHub-related utilities
+
