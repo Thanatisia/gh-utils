@@ -140,10 +140,14 @@
     - Added new directory 'tests/' for all unit tests
         + Added new unit test source file 'ghclone-unittest.py' for testing 'gh-clone'
 
-#### 2208H
+#### 2308H
 - New
     - Added new module/library 'core.py' in 'src/ghutils': Contains the Core logic library/framework containing classes for each utilities
         + Added class 'GitHubClone': Functions pertaining to cloning from GitHub through a list of defined repositories in the format of 'author/project-name'
     - Updated unit test 'ghclone-unittest.py'
         + Renamed module import 'ghclone.py' => 'core.py'
+
+#### 2312H
+- Updates
+    + Fixed changelogs header
 
