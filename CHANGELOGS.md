@@ -181,3 +181,11 @@
         + Replaced embedded class 'GitHubClone' with library/module 'from ghutils.core import GitHubCore'
         + Moved the cloning logical statements from main() to function ghclone()
 
+#### 1200H
+- Updates
+    - Updated document 'USAGE.md'
+        + Added complete write-up for implementations in library/module 'core.py'
+        + Added usage examples to embed/implement the library/module
+    - Updated module 'core.py' in 'src/ghutils'
+        + Added docstring comments to class 'GitHubClone'
+
