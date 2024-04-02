@@ -175,3 +175,9 @@
         + Added new class 'GitHubClone' as an attempt to start creating a library/framework of GitHub-related utilities
     + Fixed changelogs header
 
+#### 1105H
+- Updates
+    - Updated source file 'ghclone.py'
+        + Replaced embedded class 'GitHubClone' with library/module 'from ghutils.core import GitHubCore'
+        + Moved the cloning logical statements from main() to function ghclone()
+
