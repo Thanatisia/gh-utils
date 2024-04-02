@@ -5,11 +5,12 @@ USAGE
 
 *Tools*
 -------
-+ gh-clone.py : GitHub repositories cloning CLI utility
++ gh-clone : GitHub repositories cloning CLI utility
++ gh-retrieve : Backup/Archive your full list of your Public/Private repositories using the GitHub API
 
 ## CLI utilities
 
-> gh-clone.py
+> gh-clone
 
 #### Setup
 
@@ -153,6 +154,60 @@ USAGE
 - Cloning Private (and Public) Repositories
     ```bash
     GITHUB_API_TOKEN=[GITHUB_API_TOKEN] gh-clone
+    ```
+
+> gh-retrieve
+
+#### Setup
+
+*Dependencies*
+--------------
++ python
++ python-pip
++ python-venv
+- Python packages
+    - json
+    - requests
+    - subprocess
+
+*Pre-Requisites*
+----------------
+- Create a Python Virtual Environment
+    - Generate Virtual Environment
+        ```bash
+        python -m venv [virtual-environment-name]
+        ```
+    - Chroot into Virtual Environment
+        - Linux
+            ```bash
+            . [virtual-environment-name]/bin/activate
+            ```
+        - Windows
+            ```bash
+            .\[virtual-environment-name]\Scripts\activate
+            ```
+
+- Set your GitHub API Token/Secret Key as an Environment Variable
+    ```bash
+    export GITHUB_API_TOKEN=[GITHUB_API_TOKEN]
+    ```
+
+*Environment Variables*
+-----------------------
+- Security
+    - GITHUB_API_TOKEN : Set your GitHub API Token (aka 'Secret Key') if you wish to clone Private Repositories
+        + Type: String
+
+*Usage*
+-------
+- Cloning Public Repositories
+    ```bash
+    gh-retrieve
+    ```
+
+- Cloning Private (and Public) Repositories
+    ```bash
+    GITHUB_API_TOKEN=[GITHUB_API_TOKEN] gh-retrieve
     ```
 
 ## Importing/Embedding as a library/module

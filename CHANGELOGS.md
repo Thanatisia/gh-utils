@@ -189,3 +189,30 @@
     - Updated module 'core.py' in 'src/ghutils'
         + Added docstring comments to class 'GitHubClone'
 
+#### 1317H
+- Updates
+    - Updated document 'USAGE.md'
+        + Added complete write-up for implementations in library/module 'core.py'
+        + Added usage examples to embed/implement the library/module
+    - Updated source file 'ghclone.py'
+        + Replaced embedded class 'GitHubClone' with library/module 'from ghutils.core import GitHubCore'
+        + Moved the cloning logical statements from main() to function ghclone()
+    - Updated module 'core.py' in 'src/ghutils'
+        + Added docstring comments to class 'GitHubClone'
+
+#### 2244H
+- New
+    + Added new module 'ghretrieve.py' in 'src/ghutils' : Backup/Archive your full list of your Public/Private repositories using the GitHub API
+
+- Updates
+    - Updated document 'README.md'
+        + Updated version to v0.4.0
+        + Added 'gh-retrieve' to the list
+    - Updated document 'requirements.txt'
+        + Added new dependencies
+    - Updated python packaging script 'setup.py'
+        + Updated version to v0.4.0
+        + Added new dependencies
+    - Updated document 'USAGE.md'
+        + Added usage documentation and examples for new GitHub CLI support utility - ghretrieve
+
