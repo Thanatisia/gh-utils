@@ -2,6 +2,7 @@
 
 ## Table of Contents
 + [2024-04-01](#2024-04-01)
++ [2024-04-02](#2024-04-02)
 
 ## Entry Logs
 ### 2024-04-01
@@ -149,5 +150,28 @@
 
 #### 2312H
 - Updates
+    + Fixed changelogs header
+
+### 2024-04-02
+#### 1048H
++ Version: 0.3.0
+
+- Version Changes
+    - gh-clone
+        + (Temporary) Added new class 'GitHubClone' as an attempt to start creating a library/framework of GitHub-related utilities
+    - Added new module/library 'core.py' : Contains the Core logic library/framework containing classes for each utilities
+        + Added class 'GitHubClone': Functions pertaining to cloning from GitHub through a list of defined repositories in the format of 'author/project-name'
+
+- New
+    - Added new directory 'tests/' for all unit tests
+        - Added new unit test source file 'ghclone-unittest.py' for testing 'gh-clone'
+            - Updated unit test 'ghclone-unittest.py'
+                + Renamed module import 'ghclone.py' => 'core.py'
+    - Added new module/library 'core.py' in 'src/ghutils': Contains the Core logic library/framework containing classes for each utilities
+        + Added class 'GitHubClone': Functions pertaining to cloning from GitHub through a list of defined repositories in the format of 'author/project-name'
+
+- Updates
+    - Updated source file 'ghclone.py'
+        + Added new class 'GitHubClone' as an attempt to start creating a library/framework of GitHub-related utilities
     + Fixed changelogs header
 

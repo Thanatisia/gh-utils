@@ -10,7 +10,7 @@
 
 ### Project
 + Package Name: gh-utils
-+ Current Version: v0.2.0
++ Current Version: v0.3.0
 
 
 
