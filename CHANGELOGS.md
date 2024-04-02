@@ -242,3 +242,23 @@
     - Updated module 'core.py' in 'src/ghutils'
         + Added docstring comments to class 'GitHubClone'
 
+#### 2305H
++ Version: 0.4.1
+
+- Version Changes
+    + Removed 'json' from dependencies
+    + Added new console_script entry point for 'gh-retrieve'
+
+- Updates
+    - Updated document 'README.md'
+        + Updated version to v0.4.1
+    - Updated document 'USAGE.md'
+        + Added new usage for 'gh-retrieve': To debug and check if the repositories are correct
+    - Updated document 'requirements.txt'
+        + Removed dependencies - 'json': Built-in; not found in pip
+    - Updated python packaging script 'setup.py'
+        + Updated version to v0.4.1
+        + Removed dependencies - 'json': Built-in; not found in pip
+        + Added new console_script entry point for 'gh-retrieve'
+
+

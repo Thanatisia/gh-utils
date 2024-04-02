@@ -210,6 +210,17 @@ USAGE
     GITHUB_API_TOKEN=[GITHUB_API_TOKEN] gh-retrieve
     ```
 
+- To debug and check if the repositories are correct
+    - using 'jq'
+        - Get repository full names (Format: author/project-name)
+            ```bash 
+            cat output-[public|private].json | jq -r '.[].full_name'
+            ```
+        - Check number of entries
+            ```bash 
+            cat output-[public|private].json | jq -r '.[].full_name' | wc -l
+            ```
+
 ## Importing/Embedding as a library/module
 
 *Library*
