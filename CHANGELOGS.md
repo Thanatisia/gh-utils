@@ -280,3 +280,40 @@
         - obtain_repo_json()
             + Replaced 'send_get_request()' to 'gh_search_by_token()' to make it more modular
 
+#### 2214H
++ Version: 0.4.2
+
+- Version Changes
+    - gh-retrieve
+        - New Features
+            + Added lines to process the JSON dictionary contents for both Public and Private repositories, and extract the filenames
+            - Able to properly
+                + Obtain the Public repositories of your GITHUB_API_KEY via sending a GET request and return the results to a JSON file containing the information of all repositories found that is Public
+                + Obtain the Private repositories of your GITHUB_API_KEY via sending a GET request and return the results to a JSON file containing the information of all repositories found that is Private
+                + Go through the output JSON files, import into the system to filter and obtain the file names of every project repository
+                + Write the repository list into an output 'repositories list' file for cloning with 'gh-clone'
+        - New Functions
+            + Added new function 'gh_search_by_token()': Search and return a list of all repositories according to a provided GitHub API Token
+        - Modifications and Changes
+            - Function 'send_get_request()'
+                + Added new parameter 'other_parameters' for holding other parameters to parse into the GET request
+        - Bug Fixes
+            + Added file existence check if the JSON files are found
+            + Fixed lines to import the JSON file contents into dictionary properly
+
+- Updates
+    - Updated document 'README.md'
+        + Updated version to v0.4.2
+    - Updated python packaging script 'setup.py'
+        + Updated version to v0.4.2
+    - Updated module 'ghretrieve.py'
+        + Added new function 'gh_search_by_token()': Search and return a list of all repositories according to a provided GitHub API Token
+        + Added file existence check if the JSON files are found
+        + Fixed lines to import the JSON file contents into dictionary properly
+        + Added lines to process the JSON dictionary contents for both Public and Private repositories, and extract the filenames
+        - Function 'send_get_request()'
+            + Added docstring documentation comments to function 'send_get_request()'
+            + Added new parameter 'other_parameters' for holding other parameters to parse into the GET request
+        - obtain_repo_json()
+            + Replaced 'send_get_request()' to 'gh_search_by_token()' to make it more modular
+
