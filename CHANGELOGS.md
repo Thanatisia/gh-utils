@@ -271,3 +271,12 @@
         + Fixed lines to import the JSON file contents into dictionary properly
         + Added lines to process the JSON dictionary contents for both Public and Private repositories, and extract the filenames
 
+#### 2209H
+- Updates
+    - Updated module 'ghretrieve.py'
+        - Function 'send_get_request()'
+            + Added docstring documentation comments to function 'send_get_request()'
+            + Added new parameter 'other_parameters' for holding other parameters to parse into the GET request
+        - obtain_repo_json()
+            + Replaced 'send_get_request()' to 'gh_search_by_token()' to make it more modular
+

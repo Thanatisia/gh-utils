@@ -14,9 +14,26 @@ from subprocess import Popen, PIPE
 
 GITHUB_API_TOKEN = os.getenv("GITHUB_API_TOKEN")
 
-def send_get_request(url, headers):
-    # Send a HTTP REST API GET request to GitHub API and return the results as a response
-    response = requests.get(url, headers=headers)
+def send_get_request(url, headers, other_parameters={}):
+    """
+    Send a HTTP REST API GET request to the specified URL and return the results as a response
+
+    :: Params
+    - url: Specify the server URL you wish to send the GET request to
+        + Type: String
+
+    - headers: Specify the header to parse into the GET request
+        + Type: Dictionary
+        + Format: `headers={"header-name" : "header-value"}`
+        - Examples
+            + "Authorization: Bearer [API KEY]" : `headers={"Authorization" : "Bearer [API-KEY]"}`
+
+    - other_parameters : Specify a dictionary object containing other parameters you wish to parse into the GET request
+        + Type: Dictionary
+        + Default: {} (Empty Dictionary)
+    """
+    # Send a HTTP REST API GET request and return the results as a response
+    response = requests.get(url, headers=headers, **other_parameters)
 
     # Obtain GET request response text
     response_text = response.text
@@ -104,10 +121,7 @@ def obtain_repo_json(output_json_file="output.json", curr_page_number=1, maximum
         # Check if JSON file exists
         if not (os.path.isfile(output_json_file)):
             # Send a HTTP REST API GET request to GitHub API and return the results as a response
-            response_text, response_json = send_get_request(
-                "https://api.github.com/user/repos?type={}&per_page={}&page={}".format(repository_type, maximum_repo, curr_page_number),
-                headers={"Authorization" : "Bearer {}".format(GITHUB_API_TOKEN)}
-            )
+            response_json = gh_search_by_token(GITHUB_API_TOKEN, curr_page_number, maximum_repo, repository_type)
 
             # Write to output file
             with open(output_json_file, "w+") as export_output_JSON_file:
