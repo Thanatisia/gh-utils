@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='ghutils',
-    version='0.3.0',
+    version='0.4.2',
     description="Collection of various GitHub-related git remote repository server helper utilities",
     author='Thanatisia',
     author_email='55834101+Thanatisia@users.noreply.github.com',
@@ -10,6 +10,7 @@ setup(
     package_dir={"": "src"},
     install_requires=[
         # List your dependencies here
+        "requests",
     ],
     url='https://github.com/Thanatisia/gh-utils',
     classifiers=[
@@ -27,6 +28,7 @@ setup(
         # Program Entry Point(s) and scripts
         'console_scripts' : [
             'gh-clone = ghutils.ghclone:main',
+            'gh-retrieve = ghutils.ghretrieve:main',
         ],
     },
 )

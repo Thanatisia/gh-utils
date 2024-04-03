@@ -6,6 +6,9 @@ import sys
 from subprocess import PIPE, Popen
 
 class GitHubClone():
+    """
+    Class containing implementations and logic for customizing specifications when cloning git repositories from GitHub en-mass
+    """
     def __init__(self, GIT_REPO_AUTHOR="",
                  GIT_REMOTE_REPO_SERVER_PROTOCOL="https", GIT_REMOTE_REPO_SERVER_DOMAIN="github.com",
                  REPO_NAMES_DB_FILE_PATH="docs/records", REPO_NAMES_DB_FILE_NAME="all-repos.txt",
