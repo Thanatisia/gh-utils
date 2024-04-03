@@ -3,6 +3,7 @@
 ## Table of Contents
 + [2024-04-01](#2024-04-01)
 + [2024-04-02](#2024-04-02)
++ [2024-04-03](#2024-04-03)
 
 ## Entry Logs
 ### 2024-04-01
@@ -261,4 +262,12 @@
         + Removed dependencies - 'json': Built-in; not found in pip
         + Added new console_script entry point for 'gh-retrieve'
 
+### 2024-04-03
+#### 1258H
+- Updates
+    - Updated module 'ghretrieve.py'
+        + Added new function 'gh_search_by_token()': Search and return a list of all repositories according to a provided GitHub API Token
+        + Added file existence check if the JSON files are found
+        + Fixed lines to import the JSON file contents into dictionary properly
+        + Added lines to process the JSON dictionary contents for both Public and Private repositories, and extract the filenames
 
